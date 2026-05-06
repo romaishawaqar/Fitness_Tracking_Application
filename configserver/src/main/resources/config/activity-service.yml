@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/fitnessactivities
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+#    queue:
+#      name: activity.queue
+#    exchange:
+#      name: fitness.exchange
+#    routing:
+#      key: activity.tracking
+
+rabbitmq:
+  queue:
+    name: activity.queue
+  exchange:
+    name: fitness.exchange
+  routing:
+    key: activity.tracking
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

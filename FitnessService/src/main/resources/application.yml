@@ -1,0 +1,27 @@
+#server:
+#  port: 8081
+#spring:
+#  application:
+#    name: fitness-service
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/fitnessdb
+#    username: postgres
+#    password: sajid123
+#  config:
+#    import: optional:configserver:http://localhost:8888
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: user-service
+  config:
+    import: optional:configserver:http://localhost:8888

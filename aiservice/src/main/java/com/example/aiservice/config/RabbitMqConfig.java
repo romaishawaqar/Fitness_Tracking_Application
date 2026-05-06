@@ -1,0 +1,43 @@
+package com.example.aiservice.config;
+
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class RabbitMqConfig {
+
+    @Value("${rabbitmq.queue.name:activity.queue}")
+    private String queue;
+    @Value("${rabbitmq.routing.key:activity.tracking}")
+    private String routingKey;
+    @Value("${rabbitmq.exchange.name:fitness.exchange}")
+    private String exchange;
+
+    @Bean
+    public Queue activityQueue(){
+        return new Queue(queue, true);
+    }
+
+    @Bean
+    public DirectExchange activityExchange(){
+        return new DirectExchange(exchange);
+    }
+
+    @Bean
+    public Binding activityBinding(Queue activityQueue, DirectExchange activityExchange){
+        return BindingBuilder.bind(activityQueue).to(activityExchange).with(routingKey);
+    }
+
+
+    @Bean
+    public MessageConverter jsonMessageConverter(){
+        return new JacksonJsonMessageConverter();
+    }
+}
