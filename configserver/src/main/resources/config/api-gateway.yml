@@ -4,22 +4,31 @@ server:
 spring:
   application:
     name: api-gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/fitness-oauth2/protocol/openid-connect/certs
 
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
         - id: user-service
-          uri: lb://USER-SERVICE
+          uri: lb://user-service
           predicates:
             - Path=/api/users/**
 
         - id: activity-service
-          uri: lb://ACTIVITY-SERVICE
+          uri: lb://activity-service
           predicates:
             - Path=/api/activities/**
 
         - id: ai-service
-          uri: lb://AI-SERVICE
+          uri: lb://ai-service
           predicates:
             - Path=/api/recommendations/**
 
@@ -31,3 +40,12 @@ eureka:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env,beans,gateway
+  endpoint:
+    gateway:
+      enabled: true

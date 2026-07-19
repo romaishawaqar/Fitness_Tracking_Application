@@ -1,7 +1,9 @@
 server:
-  port: 8080
+  port: 8082
 
 spring:
+  application:
+    name: activity-service
   data:
     mongodb:
       uri: mongodb://localhost:27017/fitnessactivities
@@ -17,6 +19,8 @@ spring:
 #      name: fitness.exchange
 #    routing:
 #      key: activity.tracking
+
+
 
 rabbitmq:
   queue:
